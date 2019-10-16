@@ -9,7 +9,8 @@ class App extends Component {
     super(props);
     this.state = {
       monsters: [],
-      searchField: ""
+      searchField: "",
+      title: ""
     };
   }
   handleError = response => {
@@ -28,6 +29,22 @@ class App extends Component {
       .then(users => this.setState({ monsters: users }))
       .catch(console.log);
   }
+  componentDidUpdate() {
+    console.log(
+      new Date().toLocaleTimeString(),
+      "Component rendered for update"
+    );
+    document.body.style.backgroundColor = `rgba(${Math.floor(
+      Math.random() * 100
+    )},${Math.floor(Math.random() * 100)},${Math.floor(Math.random() * 100)})`;
+  }
+  componentWillUnmount() {
+    document.body.style.backgroundColor = "black";
+  }
+  change = () => {
+    document.body.style.backgroundColor = "aliceblue";
+    this.setState({ position: null });
+  };
 
   render() {
     const { monsters, searchField } = this.state;
@@ -36,7 +53,7 @@ class App extends Component {
     );
     return (
       <div className='App'>
-        <h1>Monster Rolodex</h1>
+        <h1 onClick={this.change}>Monster Rolodex</h1>
         <SearchBox
           placeholder='Search Monster'
           handleChange={this.handleChange}
